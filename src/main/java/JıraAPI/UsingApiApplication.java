@@ -1,4 +1,4 @@
-package jira.using_api;
+package JıraAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

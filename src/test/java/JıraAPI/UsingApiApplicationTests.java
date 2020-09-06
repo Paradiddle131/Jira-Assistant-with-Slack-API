@@ -1,4 +1,4 @@
-package jira.using_api;
+package JıraAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

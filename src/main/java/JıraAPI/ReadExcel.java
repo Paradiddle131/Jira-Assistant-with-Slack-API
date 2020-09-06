@@ -1,6 +1,6 @@
-package jira.using_api;
+package JıraAPI;
 
-import org.apache.poi.ss.usermodel.Cell;
+import Objects.PBI;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -8,7 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ReadExcel {
@@ -16,22 +16,27 @@ public class ReadExcel {
     private XSSFSheet sheet;
     private FileInputStream stream;
 
-    public HashMap<String, Integer> getPbiMap() throws IOException {
+    public ArrayList<PBI> getPbiFromExcel() throws IOException {
         readExcel();
         Iterator<Row> rowIterator = sheet.iterator();
         Row row = rowIterator.next(); // skips headers
+        ArrayList<PBI> pbiList = new ArrayList<>();
 
-        HashMap<String, Integer> map = new HashMap<>();
         while(rowIterator.hasNext()) {
             row = rowIterator.next();
-
-            int storyPoint = (int) row.getCell(7).getNumericCellValue();
-            String pbiName = row.getCell(2).getStringCellValue();
-            map.put(pbiName, storyPoint);
+            pbiList.add(new PBI(
+                    row.getCell(0).getStringCellValue(),
+                    (int) row.getCell(1).getNumericCellValue(),
+                    row.getCell(2).getStringCellValue(),
+                    row.getCell(3).getStringCellValue(),
+                    row.getCell(4).getStringCellValue(),
+                    row.getCell(5).getStringCellValue(),
+                    (int) row.getCell(7).getNumericCellValue()
+            ));
         }
         workbook.close();
         stream.close();
-        return map;
+        return pbiList;
     }
 
     private void readExcel() throws IOException {
